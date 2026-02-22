@@ -23,10 +23,10 @@ export const Card: React.FC<CardProps> = ({
       layoutId={card.id}
       initial={{ scale: 0.8, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      whileHover={isPlayable ? { y: -10, scale: 1.05 } : {}}
+      whileHover={isPlayable ? { y: -5, scale: 1.02 } : {}}
       onClick={isPlayable ? onClick : undefined}
       className={`
-        relative w-16 h-24 sm:w-20 h-28 lg:w-24 lg:h-32 rounded-lg shadow-md border 
+        relative w-14 h-20 sm:w-16 h-24 lg:w-20 lg:h-28 rounded-md shadow-md border 
         ${isFaceUp ? 'bg-white border-slate-200' : 'bg-indigo-600 border-indigo-400'}
         ${isPlayable ? 'cursor-pointer ring-2 ring-emerald-400/50' : ''}
         flex flex-col items-center justify-center select-none
@@ -36,21 +36,21 @@ export const Card: React.FC<CardProps> = ({
     >
       {isFaceUp ? (
         <>
-          <div className={`absolute top-0.5 left-1 text-xs sm:text-sm lg:text-base font-bold ${getSuitColor(card.suit)}`}>
+          <div className={`absolute top-0 left-0.5 text-[10px] sm:text-xs lg:text-sm font-bold ${getSuitColor(card.suit)}`}>
             {card.rank}
           </div>
-          <div className={`absolute top-0.5 right-1 text-xs sm:text-sm lg:text-base ${getSuitColor(card.suit)}`}>
+          <div className={`absolute top-0 right-0.5 text-[10px] sm:text-xs lg:text-sm ${getSuitColor(card.suit)}`}>
             {getSuitSymbol(card.suit)}
           </div>
           
-          <div className={`text-xl sm:text-2xl lg:text-3xl ${getSuitColor(card.suit)}`}>
+          <div className={`text-lg sm:text-xl lg:text-2xl ${getSuitColor(card.suit)}`}>
             {getSuitSymbol(card.suit)}
           </div>
 
-          <div className={`absolute bottom-0.5 right-1 text-xs sm:text-sm lg:text-base font-bold rotate-180 ${getSuitColor(card.suit)}`}>
+          <div className={`absolute bottom-0 right-0.5 text-[10px] sm:text-xs lg:text-sm font-bold rotate-180 ${getSuitColor(card.suit)}`}>
             {card.rank}
           </div>
-          <div className={`absolute bottom-0.5 left-1 text-xs sm:text-sm lg:text-base rotate-180 ${getSuitColor(card.suit)}`}>
+          <div className={`absolute bottom-0 left-0.5 text-[10px] sm:text-xs lg:text-sm rotate-180 ${getSuitColor(card.suit)}`}>
             {getSuitSymbol(card.suit)}
           </div>
         </>

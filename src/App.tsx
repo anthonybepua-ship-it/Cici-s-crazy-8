@@ -33,12 +33,12 @@ export default function App() {
       </div>
 
       {/* Header */}
-      <header className="p-3 flex justify-between items-center border-b border-white/10 bg-slate-900/80 backdrop-blur-md z-20">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20">
-            <span className="text-lg font-bold">8</span>
+      <header className="p-2 flex justify-between items-center border-b border-white/10 bg-slate-900/80 backdrop-blur-md z-20">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 bg-indigo-600 rounded flex items-center justify-center shadow-lg shadow-indigo-500/20">
+            <span className="text-sm font-bold">8</span>
           </div>
-          <h1 className="text-lg font-semibold tracking-tight">Cici's Crazy Eights</h1>
+          <h1 className="text-sm font-semibold tracking-tight">Cici's Crazy Eights</h1>
         </div>
         <div className="flex items-center gap-4">
           {state.status !== 'start_screen' && (
@@ -60,30 +60,30 @@ export default function App() {
       </header>
 
       {/* Game Area */}
-      <main className="flex-1 relative flex flex-col items-center justify-between p-2 sm:p-4 max-w-7xl mx-auto w-full overflow-hidden z-10">
+      <main className="flex-1 relative flex flex-col items-center justify-between p-1 sm:p-2 max-w-7xl mx-auto w-full overflow-hidden z-10">
         
         {/* AI Hand */}
-        <div className="w-full flex flex-col items-center gap-0.5 mt-0.5">
+        <div className="w-full flex flex-col items-center gap-0 mt-0">
           <div className="flex items-center gap-2 opacity-50">
-            <span className="text-[7px] font-bold uppercase tracking-widest">Opponent</span>
-            <span className="bg-white/10 px-1 py-0.5 rounded text-[7px]">{state.aiHand.length}</span>
+            <span className="text-[6px] font-bold uppercase tracking-widest">Opponent</span>
+            <span className="bg-white/10 px-1 py-0 rounded text-[6px]">{state.aiHand.length}</span>
           </div>
-          <div className="flex -space-x-10 sm:-space-x-14 lg:-space-x-18 hover:-space-x-4 lg:hover:-space-x-6 transition-all duration-300">
+          <div className="flex -space-x-10 sm:-space-x-12 lg:-space-x-14 hover:-space-x-2 transition-all duration-300">
             {state.aiHand.map((card, idx) => (
               <Card 
                 key={card.id} 
                 card={card} 
                 isFaceUp={false} 
-                className="scale-75 lg:scale-90 origin-top"
+                className="scale-90 origin-top"
               />
             ))}
           </div>
         </div>
 
         {/* Center Board */}
-        <div className="relative flex flex-row items-center justify-center gap-6 sm:gap-12 lg:gap-20 my-1">
+        <div className="relative flex flex-row items-center justify-center gap-4 sm:gap-8 lg:gap-12 my-0.5">
           {/* Draw Pile */}
-          <div className="flex flex-col items-center gap-0.5">
+          <div className="flex flex-col items-center gap-0">
              <div className="relative group">
                 <div className="absolute -inset-1 bg-indigo-500 rounded-xl blur opacity-10 group-hover:opacity-30 transition duration-1000 group-hover:duration-200"></div>
                 <Card 
@@ -91,73 +91,64 @@ export default function App() {
                   isFaceUp={false} 
                   onClick={state.currentTurn === 'player' ? drawCard : undefined}
                   isPlayable={state.currentTurn === 'player' && state.status === 'playing'}
-                  className="relative scale-90 lg:scale-100"
+                  className="relative scale-100"
                 />
                 {state.deck.length > 0 && (
-                  <div className="absolute -bottom-1 -right-1 bg-indigo-600 text-white text-[7px] font-bold px-1 py-0.5 rounded-full border border-white/20 shadow-lg">
+                  <div className="absolute -bottom-1 -right-1 bg-indigo-600 text-white text-[6px] font-bold px-1 py-0 rounded-full border border-white/20 shadow-lg">
                     {state.deck.length}
                   </div>
                 )}
              </div>
-             <span className="text-[7px] font-bold uppercase tracking-widest opacity-40">Draw</span>
+             <span className="text-[6px] font-bold uppercase tracking-widest opacity-40">Draw</span>
           </div>
 
           {/* Discard Pile */}
-          <div className="flex flex-col items-center gap-0.5">
+          <div className="flex flex-col items-center gap-0">
             <div className="relative">
-              {state.discardPile.slice(-3).map((card, idx) => (
+              {topDiscard && (
                 <Card 
-                  key={card.id} 
-                  card={card} 
-                  className={`absolute top-0 left-0 transition-transform duration-300 scale-90 lg:scale-100`}
-                  style={{ 
-                    transform: `rotate(${(idx - 1) * 5}deg) translate(${idx * 2}px, ${idx * 2}px)`,
-                    zIndex: idx 
-                  }}
+                  card={topDiscard} 
+                  className="scale-100"
                 />
-              ))}
-              {/* Placeholder for layout since children are absolute */}
-              <div className="invisible">
-                {topDiscard && <Card card={topDiscard} className="scale-90 lg:scale-100" />}
-              </div>
+              )}
 
               {/* Wild Suit Indicator */}
               {state.wildSuit && (
                 <motion.div 
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  className="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full shadow-xl flex items-center justify-center border-2 border-indigo-500 z-50"
+                  className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full shadow-xl flex items-center justify-center border border-indigo-500 z-50"
                 >
-                  <span className={`text-lg ${getSuitColor(state.wildSuit)}`}>
+                  <span className={`text-sm ${getSuitColor(state.wildSuit)}`}>
                     {getSuitSymbol(state.wildSuit)}
                   </span>
                 </motion.div>
               )}
             </div>
-            <span className="text-[7px] font-bold uppercase tracking-widest opacity-40">Discard</span>
+            <span className="text-[6px] font-bold uppercase tracking-widest opacity-40">Discard</span>
           </div>
         </div>
 
         {/* Player Hand */}
-        <div className="w-full flex flex-col items-center gap-0.5 mb-0.5">
-          <div className="flex items-center gap-1">
+        <div className="w-full flex flex-col items-center gap-0.5 mb-1 mt-auto">
+          <div className="flex items-center gap-2">
             <div className="flex items-center gap-2 opacity-50">
-              <span className="text-[7px] font-bold uppercase tracking-widest">You</span>
-              <span className="bg-white/10 px-1 py-0.5 rounded text-[7px]">{state.playerHand.length}</span>
+              <span className="text-[6px] font-bold uppercase tracking-widest">You</span>
+              <span className="bg-white/10 px-1 py-0 rounded text-[6px]">{state.playerHand.length}</span>
             </div>
             {state.currentTurn === 'player' && state.status === 'playing' && (
               <motion.div 
-                initial={{ opacity: 0, y: 5 }}
+                initial={{ opacity: 0, y: 3 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-1 text-emerald-400 text-[7px] font-bold uppercase tracking-widest"
+                className="flex items-center gap-1 text-emerald-400 text-[6px] font-bold uppercase tracking-widest"
               >
-                <ChevronUp size={8} className="animate-bounce" />
+                <ChevronUp size={6} className="animate-bounce" />
                 Your Turn
               </motion.div>
             )}
           </div>
           
-          <div className="flex -space-x-10 sm:-space-x-12 lg:-space-x-14 hover:-space-x-2 transition-all duration-300 px-4 pb-2">
+          <div className="flex -space-x-10 sm:-space-x-12 lg:-space-x-14 hover:-space-x-2 transition-all duration-300 px-4 pb-1">
             <AnimatePresence mode="popLayout">
               {state.playerHand.map((card) => (
                 <Card 
@@ -165,7 +156,7 @@ export default function App() {
                   card={card} 
                   isPlayable={state.currentTurn === 'player' && isCardPlayable(card)}
                   onClick={() => playCard(card)}
-                  className={`scale-90 lg:scale-100 origin-bottom ${state.currentTurn !== 'player' ? 'opacity-80 grayscale-[0.2]' : ''}`}
+                  className={`scale-100 origin-bottom ${state.currentTurn !== 'player' ? 'opacity-80 grayscale-[0.2]' : ''}`}
                 />
               ))}
             </AnimatePresence>
